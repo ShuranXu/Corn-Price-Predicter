@@ -2,14 +2,15 @@
 # Is it possible to predict corn price with weather?
 
 ## 1. Summary
-This project is 
+The pupose of this project is to se see if we can use weather data to predict the US corn price. This was done by ...
+
+Various datasets was extracted and analyzed,  visualizations done in Pyviz, Time series analysis performed to predict the future price of corn, which was then used in a XG Boost Machine learning model. The outcome was then used validate our research and assumptions.
+
+xxx
 
 ## 2. Background
 
-Maize (corn) is the dominant grain grown in the world. Total maize production in 2018 equaled 1.12 billion tons. Maize is used primarily as an animal feed in the production of eggs, dairy, pork and chicken. The US produces 32% of the world’s maize followed by China at 22% and Brazil at 9%.</br>
-
-In addition, the US is the leading consumer of corn worldwide. In 2019/2020, the U.S. consumed about 12.3 billion bushels of corn. China, the runner up, consumed about 10.98 billion bushels of corn in that year. </br>
-
+Maize (corn) is the dominant grain grown in the world. Total maize production in 2018 equaled 1.12 billion tons. Maize is used primarily as an animal feed in the production of eggs, dairy, pork and chicken. The US produces 32% of the world’s maize followed by China at 22% and Brazil at 9%. In addition, the US is the leading consumer of corn worldwide. In 2019/2020, the U.S. consumed about 12.3 billion bushels of corn. China, the runner up, consumed about 10.98 billion bushels of corn in that year. </br>
 
 ### What determines the price of corn?
 In a free market economy, price is determined by the supply and demand for a product or commodity. Short-term price gyrations often occur and can be influenced by market reactions to news concerning such things as weather, government reports and/or policy. Corn is a commodity that reflects this scenario.</br>
@@ -27,6 +28,10 @@ In a free market economy, price is determined by the supply and demand for a pro
 
   #### Price: Supply vs Demand
   Supply and demand interact to determine price. The market does react to short-term events, but knowing the sources of supply and demand, and when estimates of these are released, will provide the opportunity to purchase corn and cattle feed at lower prices.
+
+Corn price seasonality: 
+
+Ideal weather conditions:
 
 
 ## 2. Project Approach 
@@ -47,6 +52,17 @@ In a free market economy, price is determined by the supply and demand for a pro
 
 
 ## 4. Time series analysis
+The ARIMA time series analysis was performed with and without seasonality. 
+
+### ARIMA time series analysis findings without seasonality
+   * Training and validation datasplit was done at 70%/30% and Hodrick-Prescott Filter was used to decompose the data into trend and noise
+   * Autocorrelation and partial autocorrelation analysis was performed to determine lag to be applied in ARIMA model
+   * Corn returns was forecasted using ARIMA model using order of 3,1,2. 
+   * Forecasted value was then calculated from the adjusted closing price ?????
+      ![Corn Actual vs Forecasted Price](./Images/TS_Corn_Actual_Forecasted.png)
+  
+### ARIMA time series analysis findings with seasonality
+   * 
 
 
 ## 5. Algorythmic Trading
