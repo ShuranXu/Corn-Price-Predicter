@@ -70,7 +70,10 @@ The following table summarizes the data files used, their links and where the da
 [Corn Actual vs Forecasted Price](./Resources/TS_Corn_Actual_Forecasted.png)
 
 ## 4. Weather information
+Weather Data for the states Illinois, Indiana, Nebraska, Ohio, Iowa was pulled from the [NOAA's National Centers for Environmental Information (NCEI) Climate Data Online](https://www.ncdc.noaa.gov/cdo-web/webservices/v2) from January 1, 2000 to December 31, 2019. 
 
+Ten weather stations from each state were chosen at random to provide daily data on max temperature (TMAX), min temperature (TMIN), and precipitation (PRCP). The weather stations inside each state were averaged to provide one dataset (TMAX, TMIN, PRCP) per day.
+![map](./Images/map.png)
 
 
 ## 4. Time series analysis
