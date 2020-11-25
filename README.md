@@ -1,10 +1,9 @@
 # FinTech Bootcamp University of Toronto
-# Is it possible to predict corn price with weather?
+# Can you predict the corn price with weather features
 
 ## 1. Summary
-The pupose of this project is to see if we can use weather data to predict the US corn price. This was done by ...
-
-Various datasets were extracted and analyzed, visualizations are done in Pyviz, Time series analysis is performed to predict the future price of corn, which was then used in a XG Boost machine learning model. The outcome was then used validate our research and assumptions.
+The aim of this project is to se see if we can use weather data to predict the US corn price. The price of corn is a complex macro-economic 
+Various datasets were extracted and analyzed,  visualizations done in Pyviz, Time series analysis performed to predict the future price of corn, which was then used in a XG Boost Machine learning model. The outcome was then used validate our research and assumptions.
 
 xxx
 
@@ -12,12 +11,14 @@ xxx
 
 Maize (corn) is the dominant grain grown in the world. Total maize production in 2018 equaled 1.12 billion tons. Maize is used primarily as an animal feed in the production of eggs, dairy, pork and chicken. The US produces 32% of the world’s maize followed by China at 22% and Brazil at 9%. In addition, the US is the leading consumer of corn worldwide. In 2019/2020, the U.S. consumed about 12.3 billion bushels of corn. China, the runner up, consumed about 10.98 billion bushels of corn in that year. </br>
 
+Corn Futures are traded at the Chicago Board of Trade (CBOT), NYSE Euronext (Euronext) and Tokyo Grain Exchange (TGE). Commodities are traded based on margin, and the margin changes based on market volatility and the current face value of the contract.
+
 ### What determines the price of corn?
 In a free market economy, price is determined by the supply and demand for a product or commodity. Short-term price gyrations often occur and can be influenced by market reactions to news concerning such things as weather, government reports and/or policy. Corn is a commodity that reflects this scenario.</br>
 
   #### Supply sources:
   1. Leftover stocks from previous year
-  2. Domestic production 
+  2. Domestic production </br>
         Weather plays a critical role in domestic production - especially for planting and harvesting dates which impact the size of the crop. The United States Department of Agriculture (USDA) publishes several crop reports each year, which often cause wide price swings as the market interprets the numbers.
   3. International imports
 
@@ -29,9 +30,15 @@ In a free market economy, price is determined by the supply and demand for a pro
   #### Price: Supply vs Demand
   Supply and demand interact to determine price. The market does react to short-term events, but knowing the sources of supply and demand, and when estimates of these are released, will provide the opportunity to purchase corn and cattle feed at lower prices.
 
-Corn price seasonality: 
 
-Ideal weather conditions:
+#### Corn price fluctuation: 
+* Seasonal tendency of corn price:
+   * Late June or early July - corn hits yearly peak prices
+   * November - harvest time - corn hits yearly lowest price
+   * November - March during winter, corn prices has least volatility.
+
+* Ideal weather conditions:
+In 
 
 
 ## 2. Project Approach 
@@ -40,15 +47,29 @@ Ideal weather conditions:
 | --- | --- | --- |
 | **Phase 1: Research** | 4 Commodities were reasearched to determine which would be suitable for project: Corn, Soy, Cocoa and Sugar | Limit scope to corn due to the use and production in US, limiting data extraction to only US |
 | **Phase 2: Data extraction** |Datasets were extracted from Jan 2000 to Nov 2020: Corn price, Corn futures, weather max min and precipitation from 51 states, ethanol futures, USD index, USD Inflation | Reviewed the size of data and elimitate|
-| **Phase 3: Data refinement and imports** | Data timeframe was from Jan 2005 to Nov 2020: Corn price, weather max min and precipitation from 5 states in corn-belt, ethanol futures, USD index, USD Inflation | Data imported into Jupyter notebooks for data cleanup and analysis
+| **Phase 3: Scope refinement and data imports** | Data timeframe was from Jan 2005 to Nov 2020: Corn price, weather max min and precipitation from 5 states in corn-belt, ethanol futures, USD index, USD Inflation | Data imported into Jupyter notebooks for data cleanup and analysis
 | **Phase 4: Weather data analysis** |   |   |
 | **Phase 5: Time series analysis of corn price** |   |   |
-| **Phase 6: Algorithmic Trading of corn price** | Constructed a comprehensive trading template fetching data to trading performance evaluation dashboard of corn  |  Return is positive when trading corn using forecasted 2020 corn prices |
-|  **Phase 8: Machine learning for validation of assumptions** | Reseach findings and initial understanding were checked against via the XGBoost modeling with both weather data alone and with all data collected | Weather data is not the only top factors that impact the corn price, factors such as ethanol futures and USD index are also influncing corn price considerably |
-| **Phase 7: Overall Findings and conclusion** | All fidings from various phases were evaluated and compared  | Conclusion formulated  |
+| **Phase 6: Algorythmic Trading of corn price** | Constructed a comprehensive trading template fetching data to trading performance evaluation dashboard of corn  |   |
+| **Phase 7: Machine learning for validation of assumptions** 
+| **Phase 8: Overall Findings and conclusion** | All fidings from various phases were evaluated and compared  | Conclusion formulated  |
 
+## 3. Data
+The following table summarizes the data files used, their links and where the data was extracted from:
 
-## 3. Weather information
+|Data | Description | Source | Link |
+| --- | --- | --- | --- | --- |
+| Corn price | Daily price of corn   | www.Macrontrends.net  | [Corn Price](./Resources/corn-prices-historical-chart-data.csv)   |
+| Corn futures | Corn futures traded in commodity exchange   | www.barchart.com    |  [Corn Futures](./Resources/corn_)  |
+| Ethanol futures  |    |     |    |
+| USD Index  |    |     |    |
+|   |    |     |    |
+|   |    |     |    |
+| Weather data  |  5 states - min, max and precipitation  |  NOAA   |  [Weather data](./Resources/corn_belt_weather.csv) |
+
+[Corn Actual vs Forecasted Price](./Resources/TS_Corn_Actual_Forecasted.png)
+
+## 4. Weather information
 
 
 
@@ -61,9 +82,11 @@ The ARIMA time series analysis was performed with and without seasonality.
    * Corn returns was forecasted using ARIMA model using order of 3,1,2. 
    * Forecasted value was then calculated from the adjusted closing price ?????
       ![Corn Actual vs Forecasted Price](./Images/TS_Corn_Actual_Forecasted.png)
-  
+
 ### ARIMA time series analysis findings with seasonality
    * 
+
+_____________________
 
 
 ## 5. Algorithmic Trading
