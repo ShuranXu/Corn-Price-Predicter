@@ -2,9 +2,9 @@
 # Is it possible to predict corn price with weather?
 
 ## 1. Summary
-The pupose of this project is to se see if we can use weather data to predict the US corn price. This was done by ...
+The pupose of this project is to see if we can use weather data to predict the US corn price. This was done by ...
 
-Various datasets was extracted and analyzed,  visualizations done in Pyviz, Time series analysis performed to predict the future price of corn, which was then used in a XG Boost Machine learning model. The outcome was then used validate our research and assumptions.
+Various datasets were extracted and analyzed, visualizations are done in Pyviz, Time series analysis is performed to predict the future price of corn, which was then used in a XG Boost machine learning model. The outcome was then used validate our research and assumptions.
 
 xxx
 
@@ -43,9 +43,10 @@ Ideal weather conditions:
 | **Phase 3: Data refinement and imports** | Data timeframe was from Jan 2005 to Nov 2020: Corn price, weather max min and precipitation from 5 states in corn-belt, ethanol futures, USD index, USD Inflation | Data imported into Jupyter notebooks for data cleanup and analysis
 | **Phase 4: Weather data analysis** |   |   |
 | **Phase 5: Time series analysis of corn price** |   |   |
-| **Phase 6: Algorythmic Trading of corn price** | Constructed a comprehensive trading template fetching data to trading performance evaluation dashboard of corn  |   |
-  **Phase 8: Machine learning for validation of assumptions** 
+| **Phase 6: Algorithmic Trading of corn price** | Constructed a comprehensive trading template fetching data to trading performance evaluation dashboard of corn  |  Return is positive when trading corn using forecasted 2020 corn prices |
+|  **Phase 8: Machine learning for validation of assumptions** | Reseach findings and initial understanding were checked against via the XGBoost modeling with both weather data alone and with all data collected | Weather data is not the only top factors that impact the corn price, factors such as ethanol futures and USD index are also influncing corn price considerably |
 | **Phase 7: Overall Findings and conclusion** | All fidings from various phases were evaluated and compared  | Conclusion formulated  |
+
 
 ## 3. Weather information
 
@@ -65,9 +66,69 @@ The ARIMA time series analysis was performed with and without seasonality.
    * 
 
 
-## 5. Algorythmic Trading
+## 5. Algorithmic Trading
+
+The algorithmic trading was performed on forecasted U.S. corn price solely in 2020. Both the portfolio performance for backtesting and the actual trading performance were evaluated and presented in a dashboard.
+
+* Forecased Corn Price: The corn price for 2020 Jan - 2020 Mar was predicted using linear regression
+
+![future_corn_price.png](./Images/future_corn_price.png)
+
+* Technical Indicator: Crossover between 10-day simple moving average (SMA10) and 30-day simple moving average (SMA30)
+
+* Signals: Buy when `SMA10 < SMA30`; sell when `SMA10 > SMA30`; hold when `SMA10 = SMA30`
+
+* Trading Performance Evaluation:  
+  - Shares on Hold: `27132`
+  - Account Balance: `$0.295`
+  - Account Total Monetary Value: `$103968.4`
+  - Account Initial Capital: `$100000`
+
+Trading Activities Recorded </br>
+![trading_dashboard.png](./Images/trading_dashboard.png)
+
+*  Portfolio Performance Evaluation from backtesting:
+  - Annual Return: `0.21%`
+  - Cumulative Return: `0.072%`
+  - Annual Volatility: `0.319%`
+  - Sharpe Ratio: `0.645`
+  - Sortino Ratio: `0.971`
+
+Commodity Portfolio Performance Evaluation </br>
+![portfolio_dashboard](./Images/portfolio_dashboard.png)
+
+Forecasted Corn Price Chart with trading signals labeled </br>
+![portfolio_eval](./Images/portfolio_eval.png)
+
 
 ## 6. Deep Learning: XG Boost
+
+The XGBoost model was used to evaluate our initial understanding of factors that impact the corn prices. Specifically, the corn price prediction and the associated performance evaluation was performed with solely 
+weather data and with all features, respectively.
+
+### XGBoost Modelling with weather data alone
+
+- Features used:  `avg_prcp`, `avg_max` and  `avg_min` 
+- Data Range: `2005 - 2020`
+- window of size 5 was used 
+- 70-30 train-test split
+- Median Average Error (MAE): `0.722`
+- Average Evaluation Score: `0.703`
+
+![xgboost_weather_data](./Images/xgboost_weather_data.png)
+
+
+### XGBoost Modelling with all features
+
+- Features used: `avg_prcp`, `avg_max`, `avg_min`, `USD_index`, `ethanol_future`, `natural_gas_future`
+- Data Range: `2005 - 2020`
+- window of size 5 was used 
+- 70-30 train-test split
+- Median Average Error (MAE): `0.133`
+- Average Evaluation Score: `0.187`
+
+![xgboost_all_data](./Images/xgboost_all_data.png)
+
 
 ## 7. Major Findings
 
