@@ -2,7 +2,7 @@
 # Can you predict the corn price with weather features
 
 ## 1. Summary
-The aim of this project is to se see if we can use weather data to predict the US corn price. The price of corn is a complex macro-economic 
+The aim of this project was to analyze the US corn price and build models where weather data is used to determine the predictability thereof. 
 Various datasets were extracted and analyzed,  visualizations done in Pyviz, Time series analysis performed to predict the future price of corn, which was then used in a XG Boost Machine learning model. The outcome was then used validate our research and assumptions.
 
 xxx
@@ -38,59 +38,73 @@ In a free market economy, price is determined by the supply and demand for a pro
    * November - March during winter, corn prices has least volatility.
 
 * Ideal weather conditions:
-In 
+Corn does best with warm, sunny growing weather, well-distributed intermittent moderate rains, or irriga­tion (15 or more inches during the growing season), and 130 or more frost-free days. The U.S. corn belt has these soil and climatic conditions.
+
+   * Ideal growth temperatures: 5C - 35C
+   * Survival temperatures: 0C - 43C
+   * Lethal: 0C and below, -2C for a few minutes is lethal
 
 
 ## 2. Project Approach 
 
-|Phase | Description | Summary of Findings |
-| --- | --- | --- |
-| **Phase 1: Research** | 4 Commodities were reasearched to determine which would be suitable for project: Corn, Soy, Cocoa and Sugar | Limit scope to corn due to the use and production in US, limiting data extraction to only US |
-| **Phase 2: Data extraction** |Datasets were extracted from Jan 2000 to Nov 2020: Corn price, Corn futures, weather max min and precipitation from 51 states, ethanol futures, USD index, USD Inflation | Reviewed the size of data and elimitate|
-| **Phase 3: Scope refinement and data imports** | Data timeframe was from Jan 2005 to Nov 2020: Corn price, weather max min and precipitation from 5 states in corn-belt, ethanol futures, USD index, USD Inflation | Data imported into Jupyter notebooks for data cleanup and analysis
-| **Phase 4: Weather data analysis** |   |   |
-| **Phase 5: Time series analysis of corn price** |   |   |
-| **Phase 6: Algorythmic Trading of corn price** | Constructed a comprehensive trading template fetching data to trading performance evaluation dashboard of corn  |   |
-| **Phase 7: Machine learning for validation of assumptions** 
-| **Phase 8: Overall Findings and conclusion** | All fidings from various phases were evaluated and compared  | Conclusion formulated  |
+|Phase | Description | 
+| --- | --- | 
+| **Phase 1: Research** | 4 Commodities were reasearched to determine which would be suitable for project: Corn, Soy, Cocoa and Sugar. Refined to scope to corn due to the use and production in US, limiting data extraction to only US |
+| **Phase 2: Data extraction** |Datasets were extracted from Jan 2000 to Nov 2020: Corn price, Corn futures, weather max min and precipitation, ethanol futures, USD index, USD Inflation | Reviewed the size of data and elimitate|
+| **Phase 3: Scope refinement and data imports** | Data timeframe was from Jan 2000 to Nov 2019: Corn price, weather max min and precipitation from 5 states in corn-belt, ethanol futures, USD index. Data imported into Jupyter notebooks for data cleanup
+| **Phase 3: Weather data analysis** | Data analysis performed and dashboard built in Pyviz 
+| **Phase 4: Time series analysis of corn price** | ARIMA and SARIMA models used to predict the corn price through daily and monthly forecasting. Linear regression analysis was done daily and monthly multiple features to predict corn price | 
+| **Phase 5: Algorythmic Trading of corn price** | Constructed a comprehensive trading template fetching data to trading performance evaluation dashboard of corn. Used forecasted corn prices derived from Linear regression models |
+| **Phase 6: Machine learning for validation of assumptions** | Predicted corn price using weather data as feature and compared against prediction with multiple features |
+</br> 
 
 ## 3. Data
-The following table summarizes the data files used, their links and where the data was extracted from:
+Data files can be located in the [Resources Folder](./Resources). </br>
 
-|Data | Description | Source | Link |
-| --- | --- | --- | --- | --- |
-| Corn price | Daily price of corn   | www.Macrontrends.net  | [Corn Price](./Resources/corn-prices-historical-chart-data.csv)   |
-| Corn futures | Corn futures traded in commodity exchange   | www.barchart.com    |  [Corn Futures](./Resources/corn_)  |
-| Ethanol futures  |    |     |    |
-| USD Index  |    |     |    |
-|   |    |     |    |
-|   |    |     |    |
-| Weather data  |  5 states - min, max and precipitation  |  NOAA   |  [Weather data](./Resources/corn_belt_weather.csv) |
+The following table summarizes the data used and where it was sourced:
 
-[Corn Actual vs Forecasted Price](./Resources/TS_Corn_Actual_Forecasted.png)
+|Data | Source | 
+| --- | --- | 
+| Corn price | Daily price of corn   | www.Macrontrends.net  | 
+| Ethanol futures  | Yahoo Finance API   |    
+| USD Index  | Yahoo Finance API   |   
+| Weather data  |  NOAA  [Weather data](./Resources/corn_belt_weather.csv) |
+
+</br>
 
 ## 4. Weather information
 Weather Data for the states Illinois, Indiana, Nebraska, Ohio, Iowa was pulled from the [NOAA's National Centers for Environmental Information (NCEI) Climate Data Online](https://www.ncdc.noaa.gov/cdo-web/webservices/v2) from January 1, 2000 to December 31, 2019. 
 
-Ten weather stations from each state were chosen at random to provide daily data on max temperature (TMAX), min temperature (TMIN), and precipitation (PRCP). The weather stations inside each state were averaged to provide one dataset (TMAX, TMIN, PRCP) per day.
+Ten weather stations from each state were chosen at random to provide daily data on max temperature (TMAX), min temperature (TMIN), and precipitation (PRCP). The weather stations inside each state were averaged to provide one dataset (TMAX, TMIN, PRCP) per day. </br>
 ![map](./Images/map.png)
 
-
 ## 4. Time series analysis
-The ARIMA time series analysis was performed with and without seasonality. 
+In order to forecast the corn price, we started with the univariate time series data i.e. with the historical corn price and applied Autoregressive Integrated Moving Average, or ARIMA method. Although the method can handle data with a trend, it does not support time series with a seasonal component. Therefore, we applied an extension to ARIMA that supports the direct modeling of the seasonal component of the series is called SARIMA. We used historical corn price data from January 2020 to October 2020 to these models. </br>
 
-### ARIMA time series analysis findings without seasonality
-   * Training and validation datasplit was done at 70%/30% and Hodrick-Prescott Filter was used to decompose the data into trend and noise
-   * Autocorrelation and partial autocorrelation analysis was performed to determine lag to be applied in ARIMA model
-   * Corn returns was forecasted using ARIMA model using order of 3,1,2. 
-   * Forecasted value was then calculated from the adjusted closing price ?????
-      ![Corn Actual vs Forecasted Price](./Images/TS_Corn_Actual_Forecasted.png)
+### General Approach followed in both ARIMA and SARIMA models are as follows:
+We created monthly time series models and forecasted the movement of the corn prices as outlined below:
+1. Data Imports and Cleanup
+2. Decomposition using a Hodrick-Prescott filter (decomposed the Corn Price into trend, noise and seasonality(SARIMA))
+3. Variable selection based on stationarity (Corn Price versus transformations such as %change, Logarithmic, First Difference, Seasonal Difference, Seasonal Adjustment) 
+4. Autocorrelation & Partial Autocorrelation Analysis to find the optimal parameters
+5. Training and validation datasplit at 80%/20%
+6. Model Development
+7. Derivation and validation the forecast for 50 months of data starting September 2016
+8. Compared the actual versus forecasted values for both ARIMA and SARIMA models and looked at the MSE
+9. Forecasted 6 months of Corn Price using SARIMA from November 2020 till April 2021
+<i> Note that we had tried daily forecating of corn Price using ARIMA but it yielded is poor model, hence we chose to build models at the monthly level which were better in forcasting </i> </br>
 
-### ARIMA time series analysis findings with seasonality
-   * 
+### Findings
+Time series analysis and modelling helped answer the following questions:
+1. It was determined that the SARIMA model is better in predicting corn prices as the MSE (Mean Squared Error) of our one-step ahead forecasts yields a value of 0.094, which is lower compared to MSE of ARIMA (1.01) and it is closer to 0. An MSE of 0 would that the estimator is predicting observations of the parameter with perfect accuracy, which would be an ideal scenario but it not typically possible! </br>
 
-_____________________
+![Times Series Models Comparison](Images/TS_Forecast_Comparison.png) 
 
+![MSE SARIMA versus ARIMA](Images/MSE.png) 
+
+2. Six month Corn Price forecast using SARIMA looks as below and is in-line with the previous trends </br>
+![6 Month Corn Price Forecast](Images/SARIMA_Forecasted_Trends_Corn_Price.png)
+</br>
 
 ## 5. Algorithmic Trading
 
@@ -98,7 +112,7 @@ The algorithmic trading was performed on forecasted U.S. corn price solely in 20
 
 * Forecased Corn Price: The corn price for 2020 Jan - 2020 Mar was predicted using linear regression
 
-![future_corn_price.png](./Images/future_corn_price.png)
+   ![future_corn_price.png](./Images/future_corn_price.png)
 
 * Technical Indicator: Crossover between 10-day simple moving average (SMA10) and 30-day simple moving average (SMA30)
 
@@ -111,7 +125,7 @@ The algorithmic trading was performed on forecasted U.S. corn price solely in 20
   - Account Initial Capital: `$100000`
 
 Trading Activities Recorded </br>
-![trading_dashboard.png](./Images/trading_dashboard.png)
+  ![trading_dashboard.png](./Images/trading_dashboard.png)
 
 *  Portfolio Performance Evaluation from backtesting:
   - Annual Return: `0.21%`
@@ -121,7 +135,7 @@ Trading Activities Recorded </br>
   - Sortino Ratio: `0.971`
 
 Commodity Portfolio Performance Evaluation </br>
-![portfolio_dashboard](./Images/portfolio_dashboard.png)
+  ![portfolio_dashboard](./Images/portfolio_dashboard.png)
 
 Forecasted Corn Price Chart with trading signals labeled </br>
 ![portfolio_eval](./Images/portfolio_eval.png)
@@ -156,6 +170,9 @@ weather data and with all features, respectively.
 ![xgboost_all_data](./Images/xgboost_all_data.png)
 
 
-## 7. Major Findings
+## 7. Conclusion of findings
+   * Weather data cannot solely be used to predict corn price
+   * Based on analysis, including the macro-economic factors in models, result in better prediction of corn price
+   * You have a chance to make money trading corn using our models!
 
 
