@@ -1,11 +1,12 @@
 # FinTech Bootcamp University of Toronto
 # Can you predict the corn price with weather features
 
-## 1. Summary
-The aim of this project was to analyze the US corn price and build models where weather data is used to determine the predictability thereof. 
-Various datasets were extracted and analyzed,  visualizations done in Pyviz, Time series analysis performed to predict the future price of corn, which was then used in a XG Boost Machine learning model. The outcome was then used validate our research and assumptions.
 
-xxx
+## 1. Summary
+The aim of this project was to analyze the US corn price and build models where weather data is used to determine the predictability thereof. </br>
+
+Various datasets were extracted and analyzed,  visualizations done in Pyviz, Time series analysis performed to predict the future price of corn, which was then used in a XG Boost Machine learning model. The outcome was then used to validate our research and assumptions. </br>
+
 
 ## 2. Background
 
@@ -176,3 +177,5 @@ weather data and with all features, respectively.
    * You have a chance to make money trading corn using our models!
 
 
+## 8. Group members
+Group members: Bailey Cameron, Richa Dudani, Shuran Xu, Zeldi Snyman
