@@ -1,7 +1,6 @@
 # FinTech Bootcamp University of Toronto
 # Can you predict the corn price with weather features
 
-
 ## 1. Summary
 The aim of this project was to analyze the US corn price and build models where weather data is used to determine the predictability thereof. </br>
 
@@ -66,7 +65,7 @@ The following table summarizes the data used and where it was sourced:
 
 |Data | Source | 
 | --- | --- | 
-| Corn price | Daily price of corn   | www.Macrontrends.net  | 
+| Corn price |  www.Macrontrends.net  | 
 | Ethanol futures  | Yahoo Finance API   |    
 | USD Index  | Yahoo Finance API   |   
 | Weather data  |  NOAA  [Weather data](./Resources/corn_belt_weather.csv) |
@@ -78,9 +77,10 @@ Weather Data for the states Illinois, Indiana, Nebraska, Ohio, Iowa was pulled f
 
 Ten weather stations from each state were chosen at random to provide daily data on max temperature (TMAX), min temperature (TMIN), and precipitation (PRCP). The weather stations inside each state were averaged to provide one dataset (TMAX, TMIN, PRCP) per day. </br>
 ![map](./Images/map.png)
+</br>
 
-## 4. Time series analysis
-In order to forecast the corn price, we started with the univariate time series data i.e. with the historical corn price and applied Autoregressive Integrated Moving Average, or ARIMA method. Although the method can handle data with a trend, it does not support time series with a seasonal component. Therefore, we applied an extension to ARIMA that supports the direct modeling of the seasonal component of the series is called SARIMA. We used historical corn price data from January 2020 to October 2020 to these models. </br>
+## 5. Time series analysis
+In order to forecast the corn price, we started with the univariate time series data i.e. with the historical corn price and applied Autoregressive Integrated Moving Average, or ARIMA method. Although the method can handle data with a trend, it does not support time series with a seasonal component. Therefore, we applied an extension to ARIMA that supports the direct modeling of the seasonal component of the series is called SARIMA. We used historical corn price data from January 2020 to October 2020 to these models.
 
 ### General Approach followed in both ARIMA and SARIMA models are as follows:
 We created monthly time series models and forecasted the movement of the corn prices as outlined below:
@@ -93,21 +93,58 @@ We created monthly time series models and forecasted the movement of the corn pr
 7. Derivation and validation the forecast for 50 months of data starting September 2016
 8. Compared the actual versus forecasted values for both ARIMA and SARIMA models and looked at the MSE
 9. Forecasted 6 months of Corn Price using SARIMA from November 2020 till April 2021
-<i> Note that we had tried daily forecating of corn Price using ARIMA but it yielded is poor model, hence we chose to build models at the monthly level which were better in forcasting </i> </br>
+
+<i> Note that we had tried daily forecating of corn Price using ARIMA but it yielded is poor model, hence we chose to build models at the monthly level which were better in forcasting </i>
 
 ### Findings
 Time series analysis and modelling helped answer the following questions:
-1. It was determined that the SARIMA model is better in predicting corn prices as the MSE (Mean Squared Error) of our one-step ahead forecasts yields a value of 0.094, which is lower compared to MSE of ARIMA (1.01) and it is closer to 0. An MSE of 0 would that the estimator is predicting observations of the parameter with perfect accuracy, which would be an ideal scenario but it not typically possible! </br>
 
-![Times Series Models Comparison](Images/TS_Forecast_Comparison.png) 
+1. Comparing all the data transformation, T-test and by the p-value, seasonal first difference made our data stationary, which is inline with our research. 
 
-![MSE SARIMA versus ARIMA](Images/MSE.png) 
+![SARIMA Variable selection](Images/SARIMA_Var_Selection.PNG)
 
-2. Six month Corn Price forecast using SARIMA looks as below and is in-line with the previous trends </br>
+2. It was determined that the SARIMA model is better in predicting corn prices as the MSE (Mean Squared Error) of our one-step ahead forecasts yields a value of 0.094, which is lower compared to MSE of ARIMA (1.01) and it is closer to 0. An MSE of 0 would that the estimator is predicting observations of the parameter with perfect accuracy, which would be an ideal scenario but it not typically possible!
+
+![Times Series Models Comparison](Images/TS_Forecast_Comparison.PNG) 
+
+![MSE SARIMA versus ARIMA](Images/MSE.PNG) 
+
+3. Six month Corn Price forecast using SARIMA looks as below and is in-line with the previous trends
+
 ![6 Month Corn Price Forecast](Images/SARIMA_Forecasted_Trends_Corn_Price.png)
-</br>
 
-## 5. Algorithmic Trading
+## 6. Linear Regression
+Next, during our research we found that corn price is impacted by other factors such as US Index,Ethanol, Weather, China Imports, China Inflation Rate and USA Inflation Rates. Hence, we built Linear Regression models to predict daily and monthly corn price. In this process we used historical corn price data from March 2005 to December 2019 to these models.
+
+### General Approach followed in both Daily and Monthly Linear Regression models are as follows:
+We created monthly Linear Rgression models and forecasted the movement of the corn prices as outlined below:
+1. Data Imports, merges and Cleanup
+2. Understanding data trends and correlations between features
+3. Preparing Data for future forecasting by creating lags of Corn Price
+4. Training and validation datasplit at 80%/20%
+4. Preparing the Features (X) and the Target (y)
+5. Linear Regression Model Development
+6. Future forecast of 3-6 months
+7. Derivation and validation the forecast on test data starting October 2016
+8. Out-of-Sample Performance
+9. In-of-Sample Performance
+
+<i> Note that we had tried daily forecasting of corn Price using weather data only but it yielded is poor model, hence we chose to build models using other feautures </i>
+
+### Findings
+Linear Regression models helped answer the following questions:
+
+1. Comparing all the results of MSE and RMSE post the In Sample and Out of sample, we see that daily forecast is better than the monthly forecast. The MSE is lower, closed to zero and RMSE is between 0.2 and 0.5 compared to the other one.  
+
+![Linear Regression results](Images/LR_Results.PNG)
+
+2. Results of the forcast do not look good post March 2020, perhaps due to the extreme event like COVID-19 and crash of the ethanol price.
+
+![Daily Actual vs Forecast ](Images/LR_Forecast_Comparison.PNG)
+
+3. In normal situation, based on the model evaluation as outlined above, we feel that we can use the daily forcast of corn price to build algo trading models and see if we can make some money! </br>
+
+## 7. Algorithmic Trading
 
 The algorithmic trading was performed on forecasted U.S. corn price solely in 2020. Both the portfolio performance for backtesting and the actual trading performance were evaluated and presented in a dashboard.
 
@@ -142,7 +179,7 @@ Forecasted Corn Price Chart with trading signals labeled </br>
 ![portfolio_eval](./Images/portfolio_eval.png)
 
 
-## 6. Deep Learning: XG Boost
+## 8. Deep Learning: XG Boost
 
 The XGBoost model was used to evaluate our initial understanding of factors that impact the corn prices. Specifically, the corn price prediction and the associated performance evaluation was performed with solely 
 weather data and with all features, respectively.
@@ -171,11 +208,14 @@ weather data and with all features, respectively.
 ![xgboost_all_data](./Images/xgboost_all_data.png)
 
 
-## 7. Conclusion of findings
+## 9. Conclusion of findings
    * Weather data cannot solely be used to predict corn price
    * Based on analysis, including the macro-economic factors in models, result in better prediction of corn price
    * You have a chance to make money trading corn using our models!
 
+## 10. Code
+Code files can be located in the [Code Folder](./Code). </br>
 
-## 8. Group members
+
+## 11. Group members
 Group members: Bailey Cameron, Richa Dudani, Shuran Xu, Zeldi Snyman
