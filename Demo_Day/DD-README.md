@@ -87,7 +87,7 @@ Ten weather stations from each state were chosen at random to provide daily data
 </br>
 
 ## 6. Time series analysis
-In order to forecast the corn price, we started with the univariate time series data i.e. with the historical corn price and applied Autoregressive Integrated Moving Average, or ARIMA method. Although the method can handle data with a trend, it does not support time series with a seasonal component. Therefore, we applied an extension to ARIMA that supports the direct modeling of the seasonal component of the series is called SARIMA. We used historical corn price data from January 2020 to October 2020 to these models.
+In order to forecast the corn price, we started with the univariate time series data i.e. with the historical corn price and applied Autoregressive Integrated Moving Average, or ARIMA method. Although the method can handle data with a trend, it does not support time series with a seasonal component. Therefore, we applied an extension to ARIMA that supports the direct modeling of the seasonal component of the series is called SARIMA. We used historical corn price data from January 2000 to November 2020 to these models.
 
 ### General Approach followed in both ARIMA and SARIMA models are as follows:
 We created monthly time series models and forecasted the movement of the corn prices as outlined below:
@@ -97,9 +97,9 @@ We created monthly time series models and forecasted the movement of the corn pr
 4. Autocorrelation & Partial Autocorrelation Analysis to find the optimal parameters
 5. Training and validation datasplit at 80%/20%
 6. Model Development
-7. Derivation and validation the forecast for 50 months of data starting September 2016
+7. Derivation and validation the forecast for 51 months of data starting September 2016
 8. Compared the actual versus forecasted values for both ARIMA and SARIMA models and looked at the MSE
-9. Forecasted 6 months of Corn Price using SARIMA from November 2020 till April 2021
+9. Forecasted 6 months of Corn Price using SARIMA from December 2020 till May 2021
 
 <i> Note that we had tried daily forecasting of corn Price using ARIMA but it yielded is poor model, hence we chose to build models at the monthly level which were better in forcasting </i>
 
@@ -110,7 +110,7 @@ Time series analysis and modelling helped answer the following questions:
 
 ![SARIMA Variable selection](Images/SARIMA_Var_Selection.PNG)
 
-2. It was determined that the SARIMA model is better in predicting corn prices as the MSE (Mean Squared Error) of our one-step ahead forecasts yields a value of 0.094, which is lower compared to MSE of ARIMA (1.01) and it is closer to 0. An MSE of 0 would indicate that the estimator is predicting observations of the parameter with perfect accuracy, which would be an ideal scenario but it is not typically possible!
+2. It was determined that the SARIMA model is better in predicting corn prices as the MSE (Mean Squared Error) of our one-step ahead forecasts yields a value of 0.101, which is lower compared to MSE of ARIMA (1.058) and it is closer to 0. An MSE of 0 would indicate that the estimator is predicting observations of the parameter with perfect accuracy, which would be an ideal scenario but it is not typically possible!
 
 ![Times Series Models Comparison](Images/TS_Forecast_Comparison.PNG) 
 
@@ -121,7 +121,7 @@ Time series analysis and modelling helped answer the following questions:
 ![6 Month Corn Price Forecast](Images/SARIMA_Forecasted_Trends_Corn_Price.png)
 
 ## 7. Linear Regression
-Next, during our research we found that corn price is impacted by other factors such as US Index,Ethanol, Weather, China Imports, China Inflation Rate and USA Inflation Rates. Hence, we built Linear Regression models to predict daily and monthly corn price. In this process we used historical corn price data from March 2005 to December 2019 to these models.
+Next, during our research we found that corn price is impacted by other factors such as US Index,Ethanol, Weather, China Imports, China Inflation Rate and USA Inflation Rates. Hence, we built Linear Regression models to predict daily and monthly corn price. In this process we used historical corn price data from March 2005 to November 2020 to these models.
 
 ### General Approach followed in both Daily and Monthly Linear Regression models are as follows:
 We created monthly Linear Regression models and forecasted the movement of the corn prices as outlined below:
@@ -132,7 +132,7 @@ We created monthly Linear Regression models and forecasted the movement of the c
 4. Preparing the Features (X) and the Target (y)
 5. Linear Regression Model Development
 6. Future forecast of 3-6 months
-7. Derivation and validation the forecast on test data starting October 2016
+7. Derivation and validation the forecast on test data starting June 2017
 8. Out-of-Sample Performance
 9. In-of-Sample Performance
 
@@ -141,13 +141,13 @@ We created monthly Linear Regression models and forecasted the movement of the c
 ### Findings
 Linear Regression models helped answer the following questions:
 
-1. Comparing all the results of MSE and RMSE post the In Sample and Out of sample, we see daily forecast is better than the monthly forecast. The MSE is lower, closed to zero and RMSE is between 0.2 and 0.5 compared to the other one.  
+1. Comparing all the results of MSE and RMSE post the In Sample and Out of sample, we see daily forecast is better than the monthly forecast. 
 
 ![Linear Regression results](Images/LR_Results.PNG)
 
-2. Results of the forecast do not look good post March 2020, perhaps due to the extreme event like COVID-19 and crash of the ethanol price.
+2. Results of the forecast is showing upwards trends. This is in line with 2020 actual price trend which is recovering post Aug 2020 from extreme event COVID-19 and crash of the ethanol price.
 
-![Daily Actual vs Forecast ](Images/LR_Forecast_Comparison.PNG)
+![Daily Actual vs Forecast ](Images/LR_Forecast_Comparison.PNG) ![2020 Corn Price](Images/2020_Corn_Price.PNG)
 
 3. Under normal conditions, based on the model evaluation as outlined above, we feel that we can use the daily forecast of corn price to build algo trading models and see if we can make some money! </br>
 
