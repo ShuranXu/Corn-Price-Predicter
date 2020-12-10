@@ -9,6 +9,7 @@ import hvplot.pandas
 import panel as pn
 import plotly.express as px
 import pandas as pd
+import holoviews as hv
 
 
 # In[437]:
@@ -22,7 +23,7 @@ def add_season(df):
     for i in range(len(df)):
         if df.index.month[i] in [12,1,2]:
             Season.append('Winter')
-        elif df.index.month[i] in [3,4,5]: # March to May
+        elif df.index.month[i] in [3,4,5]:
             Season.append('Spring')
         elif df.index.month[i] in [6,7,8]: 
             Season.append('Summer')
@@ -60,11 +61,6 @@ precip_graph = add_season(precip_df)
 temp_graph = add_season(temp_df)
 
 
-# In[441]:
-
-
-precip_graph.columns
-
 
 # In[442]:
 
@@ -90,8 +86,7 @@ def weather_map():
 
 ## Weather Station Tab
 
-weather_station_text = pn.pane.Markdown('Ten weather stations were selected at random from each of the five states. The decimal point data coverage shows the total available data for each weather station.<br> Daily minimum/maximum temperatures and precipitation were averaged daily across each of the states to produce our dataset for machine learning.')
-white_space = '<p><p><p><p><p><p><p><p><p><p><p>'
+weather_station_text = pn.pane.Markdown('Ten weather stations were selected at random from each of the five states. <br> Daily minimum/maximum temperatures and precipitation were averaged daily across each of the states to produce our dataset for machine learning.')
 
 
 state_df = pd.read_csv('../Resources/station_dataset.csv',
@@ -254,7 +249,19 @@ annual_monthly_precip = pn.Column(annual_monthly1,
 # 20 Years Max/Min Temp
 def temp_20(state):
     
-    #df = temp_df.groupby(['Year','Season']).mean().copy()
+    # dashed line to show corn dies above 43
+    hline = hv.HLine(43)
+    hline.opts(
+    color='green', 
+    line_dash='dashed', 
+    line_width=2.0)
+    
+    # dashed line to show corn dies below 0
+    lline = hv.HLine(0)
+    lline.opts(
+    color='green', 
+    line_dash='dashed', 
+    line_width=2.0)
     
     return temp_df.hvplot.scatter(
         width=900,
@@ -262,29 +269,25 @@ def temp_20(state):
         y=[f'TMIN_{state}', f'TMAX_{state}'],
         title=f'{state}', 
         xlabel='Year',
-        ylabel='Temperature (C)'
-    ).opts(shared_axes=False)
+        ylabel='Temperature (C)',
+        groupby='Year'
+    ).opts(shared_axes=False)* hline*lline
 
-title_temp_20 = 'Minimum/Maximum Temperatures for 20 Years'
+title_temp_20 = '## Minimum/Maximum Temperatures for 20 Years'
 
 temp_20_graphs = pn.Column(
     pn.Row(
-        pn.Column(title_temp_20, temp_20('Iowa')),
-                  "table"
+        pn.Column(title_temp_20, temp_20('Iowa'))
     ),
     pn.Row(
-        pn.Column(temp_20('Illinois')),
-                  "table"
+        pn.Column(temp_20('Illinois'))
     ),
     pn.Row(
-        pn.Column(temp_20('Nebraska')),
-                  "table"),
+        pn.Column(temp_20('Nebraska'))),
     pn.Row(
-        pn.Column(temp_20('Indiana')),
-                  "table"),
+        pn.Column(temp_20('Indiana'))),
         pn.Row(
-        pn.Column(temp_20('Ohio')),
-                  "table")
+        pn.Column(temp_20('Ohio')))
 )
 
 
@@ -311,59 +314,26 @@ title_seasonal_temp = '## Seasonal Minimum/Maximum Temperatures for 20 Years'
 
 seasonal_temp_graphs = pn.Column(
     pn.Row(
-        pn.Column(title_seasonal_temp, seasonal_temp_20('Iowa')),
-                  "table"
+        pn.Column(title_seasonal_temp, seasonal_temp_20('Iowa'))
     ),
     pn.Row(
-        pn.Column(seasonal_temp_20('Illinois')),
-                  "table"
+        pn.Column(seasonal_temp_20('Illinois'))
     ),
     pn.Row(
-        pn.Column(seasonal_temp_20('Nebraska')),
-                  "table"),
+        pn.Column(seasonal_temp_20('Nebraska'))
+    ),
     pn.Row(
-        pn.Column(seasonal_temp_20('Indiana')),
-                  "table"),
+        pn.Column(seasonal_temp_20('Indiana'))
+    ),
         pn.Row(
-        pn.Column(seasonal_temp_20('Ohio')),
-                  "table")
+        pn.Column(seasonal_temp_20('Ohio'))
+        )
 )
 
 
+
+
 # In[448]:
-
-
-# Viable Corn Growth
-def lethal_temp(state,year):
-    
-    df = temp_graph
-    extremes = pd.DataFrame(temp_df.index)
-    extremes = extremes.set_index('date')
-    extremes = extremes.loc[f'{year}-01-01':f'{year}-12-31'].copy()
-    extremes['max_heat'] = [43 for i in range(len(extremes))]
-    extremes['max_cold'] = [0 for i in range(len(extremes))]
-
-    return df.loc[f'{year}-01-01':f'{year}-12-31'].hvplot.scatter(y=[f'TMIN_{state}',
-                                                         f'TMAX_{state}'],
-                                                       by='Year',
-                                                         width=800,
-                                                         height=400)* extremes.hvplot(color='green',
-                                                                                  title=f'{state}',
-                                                                                  ylabel='Temperature (C)',
-                                                                                      xlabel='Date',
-                                                                                  width=800,
-                                                                                  height=400).opts(shared_axes=False)
-
-grow_zone = pn.Column(
-    lethal_temp('Illinois', 2010),
-    lethal_temp('Iowa', 2010),
-    lethal_temp('Nebraska', 2010),
-    lethal_temp('Indiana', 2010),
-    lethal_temp('Ohio', 2010)
-    )
-
-
-# In[449]:
 
 
 dashboard = pn.Column("## Analysis of Weather Data for Top 5 Corn Producing States",
@@ -372,8 +342,7 @@ dashboard = pn.Column("## Analysis of Weather Data for Top 5 Corn Producing Stat
                           ("Annual Seasonal Precipitation",precip_20_long),
                           ("Annual Monthly Precipitation",annual_monthly_precip),
                           ("20 Years Max/Min Temperatures",temp_20_graphs),
-                          ("Annual Seasonal Max/Min Temperatures",seasonal_temp_graphs),
-                          ("Viable Corn Growth",grow_zone)
+                          ("Annual Seasonal Max/Min Temperatures",seasonal_temp_graphs)
                       )
                      )
 
@@ -384,13 +353,7 @@ dashboard = pn.Column("## Analysis of Weather Data for Top 5 Corn Producing Stat
 dashboard.servable().show()
 
 
-# In[235]:
 
-
-
-
-
-# In[ ]:
 
 
 
