@@ -232,9 +232,6 @@ weather data and with all features, respectively.
    * Based on analysis, including the macro-economic factors in models, result in better prediction of corn price
    * You have a chance to make money trading corn using our models!
 
-## 12. Code
 
-
-
-## 13. Group members
+## 12. Group members
 Group members: Bailey Cameron, Richa Dudani, Shuran Xu, Zeldi Snyman
